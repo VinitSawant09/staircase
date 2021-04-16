@@ -1,19 +1,15 @@
 package com.vs.staircase.dao;
 
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import com.vs.staircase.vo.OutputVO;
 import com.vs.staircase.vo.Staircase;
+
 @Component
 public class StaircaseDAO  {
 
