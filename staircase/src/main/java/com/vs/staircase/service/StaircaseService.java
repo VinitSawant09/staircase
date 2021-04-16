@@ -1,5 +1,6 @@
 package com.vs.staircase.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,10 +35,14 @@ public class StaircaseService {
 		
 	}
 	
-	public List<Staircase> getAllRequests(long threshold,  int limit)
+	public List<OutputVO> getAllRequests(long threshold,  int limit)
 	{
+		List<Staircase> list = new ArrayList<Staircase>();
+		List<OutputVO> listOutputVO = null;
 		
-		return staircaseDAO.getAllRequests(threshold, limit);
+		list = staircaseDAO.getAllRequests(threshold, limit);
+		listOutputVO =staircaseUtil.transformOutput(list);
+		return listOutputVO;
 		
 	}
 	

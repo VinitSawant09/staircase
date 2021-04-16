@@ -1,16 +1,20 @@
 package com.vs.staircase.vo;
 
-import java.util.List;
-
 public class OutputVO {
 
-	private List<Result> result;
-
-	public List<Result> getResult() {
+	
+	private Request request;
+	private long result;
+	public long getResult() {
 		return result;
 	}
-
-	public void setResult(List<Result> result) {
+	public void setResult(long result) {
 		this.result = result;
+	}
+	public Request getRequest() {
+		return request;
+	}
+	public void setRequest(Request request) {
+		this.request = request;
 	}
 }

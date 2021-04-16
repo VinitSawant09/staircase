@@ -39,13 +39,13 @@ public class StaircaseController {
 	}
 	
 	@GetMapping("/stride/request")
-	public ResponseEntity<List<Staircase>> getAllRequests(@RequestParam("threshold") long threshold, @RequestParam("limit") int limit)
+	public ResponseEntity<List<OutputVO>> getAllRequests(@RequestParam("threshold") long threshold, @RequestParam("limit") int limit)
 	{
 		
-		List<Staircase> objOutputVO=new ArrayList<Staircase> ();	
-		objOutputVO = staircaseService.getAllRequests(threshold, limit);
+		List<OutputVO> listOutputVO= new ArrayList<OutputVO> ();	
+		listOutputVO = staircaseService.getAllRequests(threshold, limit);
 		
-		return new ResponseEntity<>(objOutputVO,HttpStatus.OK);
+		return new ResponseEntity<>(listOutputVO,HttpStatus.OK);
 	}
 	
 	
