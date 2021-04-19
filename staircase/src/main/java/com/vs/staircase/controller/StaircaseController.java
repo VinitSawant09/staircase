@@ -39,8 +39,9 @@ public class StaircaseController {
 		result = staircaseService.calculateMinStrides(flights, stepsPerStride);
 		if(result>0)
 		{
+			
 			objStaircaseVO.setResult(result);
-			System.out.println(staircaseService.storeStridesRequest(objStaircaseVO).getId());
+			staircaseService.storeStridesRequest(objStaircaseVO).getId();
 		}
 		return new ResponseEntity<>(result+"",HttpStatus.OK);
 	}

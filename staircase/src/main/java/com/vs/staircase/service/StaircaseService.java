@@ -22,26 +22,51 @@ public class StaircaseService {
 	
 	public int calculateMinStrides(String flights, int stepsPerStride)
 	{
+		int result = 0;
+		try
+		{
+		result = staircaseUtil.calculateMinStrides(flights, stepsPerStride);
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
 		
-		return staircaseUtil.calculateMinStrides(flights, stepsPerStride);
-		
+		return result;
+				
 	}
 	
 	public Staircase storeStridesRequest(Staircase objStaircaseVO)
 	{
-		
-		
-		return staircaseDAO.storeStridesRequest(objStaircaseVO);
+		Staircase staircaseObj = new Staircase();
+		try
+		{
+			staircaseObj = staircaseDAO.storeStridesRequest(objStaircaseVO);
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		return staircaseObj;
 		
 	}
 	
 	public List<OutputVO> getAllRequests(long threshold,  int limit)
 	{
+		
 		List<Staircase> list = new ArrayList<Staircase>();
 		List<OutputVO> listOutputVO = null;
 		
+		try
+		{
 		list = staircaseDAO.getAllRequests(threshold, limit);
+		
 		listOutputVO =staircaseUtil.transformOutput(list);
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
 		return listOutputVO;
 		
 	}
