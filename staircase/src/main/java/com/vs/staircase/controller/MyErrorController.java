@@ -27,7 +27,7 @@ public class MyErrorController implements ErrorController
 		            return "error500";
 		        }
 		    }
-		    return "error";
+		    return "staircaseLanding";
 	    }
 
 	@Override
