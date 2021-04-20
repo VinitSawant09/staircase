@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.vs.staircase.service.StaircaseService;
@@ -23,7 +24,8 @@ public class StaircaseController {
 	StaircaseService staircaseService;
 	
 	@GetMapping("/stride")
-	public ResponseEntity<String> computeStrides(@RequestParam("flights") String flights, @RequestParam("stepsPerStride") int stepsPerStride)
+	public ResponseEntity<String> computeStrides(@RequestParam("flights") String flights, @RequestParam("stepsPerStride") int stepsPerStride
+			)
 	{
 		int result = 0;
 		Staircase objStaircaseVO = new Staircase();
@@ -47,13 +49,21 @@ public class StaircaseController {
 	}
 	
 	@GetMapping("/stride/request")
-	public ResponseEntity<List<OutputVO>> getAllRequests(@RequestParam("threshold") long threshold, @RequestParam("limit") int limit)
+	public ResponseEntity<List<OutputVO>> getAllRequests(@RequestParam("threshold") long threshold, @RequestParam("limit") int limit,
+			@RequestHeader("username") String username, @RequestHeader("password") String password
+			)
 	{
 		
-		List<OutputVO> listOutputVO= new ArrayList<OutputVO> ();	
-		listOutputVO = staircaseService.getAllRequests(threshold, limit);
+		if(username.equals( "username") && password.equals("password")  )
+		{
+			List<OutputVO> listOutputVO= new ArrayList<OutputVO> ();	
+			listOutputVO = staircaseService.getAllRequests(threshold, limit);
+			return new ResponseEntity<>(listOutputVO,HttpStatus.OK);
+		}
 		
-		return new ResponseEntity<>(listOutputVO,HttpStatus.OK);
+		
+		
+		return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
 	}
 	
 	@ExceptionHandler(MissingServletRequestParameterException.class)
