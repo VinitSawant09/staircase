@@ -74,7 +74,7 @@ public class StaircaseController {
 	{
 		try
 		{
-		if(username.equals( "username") && password.equals("password")  )
+		if(username.equals( "user") && password.equals("password")  )
 		{
 			if(validate(threshold,limit))
 			{
@@ -96,7 +96,7 @@ public class StaircaseController {
 		}
 		
 		
-		return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
 	
 	/* 
