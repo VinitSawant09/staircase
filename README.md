@@ -34,13 +34,21 @@ Methods
 1)Calculate minimum strides. (/stride?)
 
 request: GET http://localhost:8080/stride?flights=17&stepsPerStride=3
+
 result status: 200 OK
+
 result data: 6
+
 request: GET http://localhost:8080/stride?flights=17,17&stepsPerStride=3
+
 result status: 200 OK
+
 result data: 14
+
 request: GET http://localhost:8080/stride?flights=4,9,8,11,7,20,14&stepsPerStride=2
+
 result status: 200 OK
+
 result data: 50
 
 
