@@ -21,6 +21,8 @@ public class StaircaseDAO  {
 	
 	public Staircase storeStridesRequest(Staircase objStaircaseVO) {
 		
+		try
+		{
 		Date date= new Date();
         
 		long time = date.getTime();
@@ -28,6 +30,11 @@ public class StaircaseDAO  {
 	    Timestamp ts = new Timestamp(time);
 	    System.out.println("hello");
 	    objStaircaseVO.setRequestTime(ts);
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
 		return staircaseRepository.save(objStaircaseVO);
        
        
@@ -35,13 +42,20 @@ public class StaircaseDAO  {
 	
 	public List<Staircase> getAllRequests(long threshold,  int limit)
 	{
-		
-		TypedQuery<Staircase> query = entityManager.createQuery(
+		TypedQuery<Staircase> query = null;
+		List<Staircase> listOfRecords = null;
+		try
+		{
+		query = entityManager.createQuery(
 				  "FROM Staircase WHERE result<=:threshold" , Staircase.class);
 				
 		
-		List<Staircase> listOfRecords = query.setParameter("threshold", threshold).setMaxResults(limit).getResultList();
-		
+	    listOfRecords = query.setParameter("threshold", threshold).setMaxResults(limit).getResultList();
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
 		
 		return listOfRecords;
 		

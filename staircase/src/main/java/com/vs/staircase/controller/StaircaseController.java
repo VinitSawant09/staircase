@@ -29,6 +29,8 @@ public class StaircaseController {
 	{
 		int result = 0;
 		Staircase objStaircaseVO = new Staircase();
+		try
+		{
 		if(flights.contentEquals("0") || stepsPerStride<1 )
 		{
 			String msg = "computeStrides.request.flights[0].<list element>: must be greater than or equal to 1 |"
@@ -45,6 +47,14 @@ public class StaircaseController {
 			objStaircaseVO.setResult(result);
 			staircaseService.storeStridesRequest(objStaircaseVO).getId();
 		}
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+		
 		return new ResponseEntity<>(result+"",HttpStatus.OK);
 	}
 	
@@ -53,17 +63,36 @@ public class StaircaseController {
 			@RequestHeader("username") String username, @RequestHeader("password") String password
 			)
 	{
-		
+		try
+		{
 		if(username.equals( "username") && password.equals("password")  )
 		{
+			if(validate(threshold,limit))
+			{
 			List<OutputVO> listOutputVO= new ArrayList<OutputVO> ();	
 			listOutputVO = staircaseService.getAllRequests(threshold, limit);
 			return new ResponseEntity<>(listOutputVO,HttpStatus.OK);
+			}
+			else
+			{
+			 
+			 return new ResponseEntity<>(HttpStatus.BAD_REQUEST); 
+			}
+		}
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		
 		
-		
 		return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+	}
+	
+	public boolean validate(long threshold, int limit)
+	{
+		return threshold>0 && limit>0; 	
 	}
 	
 	@ExceptionHandler(MissingServletRequestParameterException.class)
