@@ -70,6 +70,7 @@ result body: [
 ]
 
 Authentication
+
 Basic Auth has been used with username:user and password:password for accessing get all requests service.
 
 
