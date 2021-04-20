@@ -15,21 +15,18 @@ public class Staircase {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-    
     private long result;
-
-	
-	public Staircase() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-
 	private String flights;
-    
     private int stepsPerStride;
-    
     private Timestamp requestTime;
 
+    // standard constructors / setters / getters / 
+    
+    public Staircase() {
+		super();
+		// TODO Auto-generated constructor stub
+	} 
+    
 	public Staircase(long id, long result, String flights, int stepsPerStride, Timestamp requestTime) {
 		super();
 		this.id = id;
@@ -79,5 +76,5 @@ public class Staircase {
 		this.result = result;
 	}
 
-    // standard constructors / setters / getters / toString
+    
 }

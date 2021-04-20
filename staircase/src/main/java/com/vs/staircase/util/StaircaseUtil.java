@@ -15,6 +15,10 @@ import com.vs.staircase.vo.Staircase;
 @Component
 public class StaircaseUtil {
 
+	/*
+	 * The basic method to calculate minimum Strides logic
+	 * 
+	 */
 	
 	public int calculateMinStrides(String flights, int stepsPerStride)
 	{
@@ -41,6 +45,10 @@ public class StaircaseUtil {
 		
 	}
 	
+	/*
+	 * Transform the database output to our custom List of OutputVO
+	 * 
+	 */
 	
 	public List<OutputVO> transformOutput(List<Staircase> list)
 	{
@@ -69,6 +77,11 @@ public class StaircaseUtil {
 		return listOutputVO;
 	}
 	
+	/*
+	 * 
+	 * Transforming String of integers separated by commas to List of Integers
+	 * 
+	 */
 	public List<Integer> transformStringToArray(String flights)
 	{
         List<String> flightsSep = Arrays.asList(flights.split(","));

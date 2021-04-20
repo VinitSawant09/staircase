@@ -19,6 +19,12 @@ public class StaircaseDAO  {
 	@PersistenceContext
     private EntityManager entityManager;
 	
+	
+	/* 
+	 * 
+	 * DAO Method to store the request in in memory databases table Staircase
+	 * 
+	 */
 	public Staircase storeStridesRequest(Staircase objStaircaseVO) {
 		
 		try
@@ -39,6 +45,12 @@ public class StaircaseDAO  {
        
        
     }
+	
+	/* 
+	 * 
+	 * DAO Method to get all requests based on threshold and limit
+	 * 
+	 */
 	
 	public List<Staircase> getAllRequests(long threshold,  int limit)
 	{

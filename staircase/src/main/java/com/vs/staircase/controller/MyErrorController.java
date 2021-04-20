@@ -1,14 +1,16 @@
 package com.vs.staircase.controller;
 
 import javax.servlet.RequestDispatcher;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.ModelAndView;
+
+/*Customized error controller to handle 404,500 errors */ 
+
 @Controller
 public class MyErrorController implements ErrorController
 {
