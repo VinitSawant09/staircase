@@ -6,6 +6,9 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import com.vs.staircase.vo.Staircase;
@@ -13,6 +16,8 @@ import com.vs.staircase.vo.Staircase;
 @Component
 public class StaircaseDAO  {
 
+	Logger logger = LogManager.getLogger(StaircaseDAO.class);
+	
 	@Autowired
 	StaircaseRepository staircaseRepository;
 	
@@ -26,7 +31,7 @@ public class StaircaseDAO  {
 	 * 
 	 */
 	public Staircase storeStridesRequest(Staircase objStaircaseVO) {
-		
+		logger.info("Inside storeStridesRequest method");
 		try
 		{
 		Date date= new Date();
@@ -41,6 +46,7 @@ public class StaircaseDAO  {
 		{
 			e.printStackTrace();
 		}
+		logger.info("End of storeStridesRequest method");
 		return staircaseRepository.save(objStaircaseVO);
        
        
@@ -54,6 +60,7 @@ public class StaircaseDAO  {
 	
 	public List<Staircase> getAllRequests(long threshold,  int limit)
 	{
+		logger.info("Inside getAllRequests method");
 		TypedQuery<Staircase> query = null;
 		List<Staircase> listOfRecords = null;
 		try
@@ -68,7 +75,7 @@ public class StaircaseDAO  {
 		{
 			e.printStackTrace();
 		}
-		
+		logger.info("End of getAllRequests method");
 		return listOfRecords;
 		
 	}

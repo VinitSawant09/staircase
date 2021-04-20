@@ -3,6 +3,8 @@ package com.vs.staircase.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -14,6 +16,8 @@ import com.vs.staircase.vo.Staircase;
 @Component
 public class StaircaseService {
 	
+	Logger logger = LogManager.getLogger(StaircaseService.class);
+	
 	@Autowired
 	StaircaseUtil staircaseUtil;
 	
@@ -22,31 +26,37 @@ public class StaircaseService {
 	
 	public int calculateMinStrides(String flights, int stepsPerStride)
 	{
+		logger.info("Inside calculateMinStrides method");
 		int result = 0;
 		try
 		{
 		result = staircaseUtil.calculateMinStrides(flights, stepsPerStride);
+		logger.info("Minimum Strides calculated was-"+result);
 		}
 		catch(Exception e)
 		{
 			e.printStackTrace();
 		}
 		
+		logger.info("End of calculateMinStrides method");
 		return result;
 				
 	}
 	
 	public Staircase storeStridesRequest(Staircase objStaircaseVO)
 	{
+		logger.info("Inside storeStridesRequest method");
 		Staircase staircaseObj = new Staircase();
 		try
 		{
 			staircaseObj = staircaseDAO.storeStridesRequest(objStaircaseVO);
+			logger.info(staircaseObj.toString());
 		}
 		catch(Exception e)
 		{
 			e.printStackTrace();
 		}
+		logger.info("End of storeStridesRequest method");
 		return staircaseObj;
 		
 	}
@@ -54,6 +64,7 @@ public class StaircaseService {
 	public List<OutputVO> getAllRequests(long threshold,  int limit)
 	{
 		
+		logger.info("Inside getAllRequests method");
 		List<Staircase> list = new ArrayList<Staircase>();
 		List<OutputVO> listOutputVO = null;
 		
@@ -67,6 +78,7 @@ public class StaircaseService {
 		{
 			e.printStackTrace();
 		}
+		logger.info("End of getAllRequests method");
 		return listOutputVO;
 		
 	}

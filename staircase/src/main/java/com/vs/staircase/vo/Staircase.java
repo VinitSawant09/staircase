@@ -76,5 +76,11 @@ public class Staircase {
 		this.result = result;
 	}
 
+	@Override
+	public String toString() {
+		return "Staircase [id=" + id + ", result=" + result + ", flights=" + flights + ", stepsPerStride="
+				+ stepsPerStride + ", requestTime=" + requestTime + "]";
+	}
+
     
 }

@@ -1,8 +1,13 @@
 package com.vs.staircase.controller;
+import java.nio.charset.StandardCharsets;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.Date;
 import java.util.List;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +17,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+
 import com.vs.staircase.service.StaircaseService;
 import com.vs.staircase.vo.ErrorVO;
 import com.vs.staircase.vo.OutputVO;
@@ -20,6 +27,9 @@ import com.vs.staircase.vo.Staircase;
 @RestController
 public class StaircaseController {
 
+	Logger logger = LogManager.getLogger(StaircaseController.class);
+	
+	
 	@Autowired
 	StaircaseService staircaseService;
 	
@@ -31,6 +41,8 @@ public class StaircaseController {
 	public ResponseEntity<String> computeStrides(@RequestParam("flights") String flights, @RequestParam("stepsPerStride") int stepsPerStride
 			)
 	{
+		
+		logger.info("Inside computeStrides method");
 		int result = 0;
 		Staircase objStaircaseVO = new Staircase();
 		try
@@ -39,6 +51,7 @@ public class StaircaseController {
 		{
 			String msg = "computeStrides.request.flights[0].<list element>: must be greater than or equal to 1 |"
 					+ "computeStrides.request.stepsPerStride: must be greater than or equal to 1";
+			logger.error("Bad request.");
 			return new ResponseEntity<>(msg,HttpStatus.BAD_REQUEST);
 		}
 		objStaircaseVO.setFlights(flights);
@@ -55,7 +68,12 @@ public class StaircaseController {
 		catch(Exception e)
 		{
 			e.printStackTrace();
+			logger.error("Internal server Error");
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		finally
+		{
+			logger.info("End of computeStrides method");
 		}
 		
 		
@@ -69,13 +87,16 @@ public class StaircaseController {
 	
 	@GetMapping("/stride/request")
 	public ResponseEntity<List<OutputVO>> getAllRequests(@RequestParam("threshold") long threshold, @RequestParam("limit") int limit,
-			@RequestHeader("username") String username, @RequestHeader("password") String password
+			
+			@RequestHeader("Authorization") String auth 
 			)
 	{
+		logger.info("Inside getAllRequests method");
 		try
 		{
-		if(username.equals( "user") && password.equals("password")  )
-		{
+		   if(validateAuth(auth))
+		   {
+		   
 			if(validate(threshold,limit))
 			{
 			List<OutputVO> listOutputVO= new ArrayList<OutputVO> ();	
@@ -87,7 +108,13 @@ public class StaircaseController {
 			 
 			 return new ResponseEntity<>(HttpStatus.BAD_REQUEST); 
 			}
-		}
+		   }
+		   else
+		   {
+			   return new ResponseEntity<>(HttpStatus.NOT_FOUND); 
+		   }
+		   
+			
 		}
 		catch(Exception e)
 		{
@@ -95,8 +122,13 @@ public class StaircaseController {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		
+		finally
+		{
+			logger.info("End of getAllRequests method");
+		}
 		
-		return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		
+		
 	}
 	
 	/* 
@@ -108,7 +140,34 @@ public class StaircaseController {
 		return threshold>0 && limit>0; 	
 	}
 	
+	/* 
+	 * Method to validate Basic Auth using username= user nad password = password                         
+	 */ 
 	
+	
+	public boolean validateAuth(String authorization)
+	{
+		logger.info("Inside validateAuth method");
+		logger.debug("Auth:"+authorization);
+		boolean result = false;
+		
+		if (authorization != null && authorization.toLowerCase().startsWith("basic")) {
+		    // Authorization: Basic base64credentials
+		    String base64Credentials = authorization.substring("Basic".length()).trim();
+		    byte[] credDecoded = Base64.getDecoder().decode(base64Credentials);
+		    String credentials = new String(credDecoded, StandardCharsets.UTF_8);
+		    // credentials = user:password
+		    String[] values = credentials.split(":", 2);
+		    if (values[0].equals("user")  && values[1].equals("password"))
+		    {
+		    	logger.info("Successful authorization.");
+		    	return true;
+		    }
+		}
+		logger.info("Failed authorization. 404 Status returned");
+		logger.info("End of validateAuth method");
+		return result;
+	}
 	
 	
 	/* 
