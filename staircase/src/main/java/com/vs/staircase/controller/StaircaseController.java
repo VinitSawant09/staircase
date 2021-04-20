@@ -3,6 +3,10 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import javax.servlet.RequestDispatcher;
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,6 +14,7 @@ import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.vs.staircase.service.StaircaseService;
@@ -22,6 +27,8 @@ public class StaircaseController {
 
 	@Autowired
 	StaircaseService staircaseService;
+	
+	
 	
 	@GetMapping("/stride")
 	public ResponseEntity<String> computeStrides(@RequestParam("flights") String flights, @RequestParam("stepsPerStride") int stepsPerStride
@@ -115,6 +122,8 @@ public class StaircaseController {
 	   
 	    return new ResponseEntity<>(objErrorVO,HttpStatus.OK) ;
 	}
+	
+	
 	
 	
 	

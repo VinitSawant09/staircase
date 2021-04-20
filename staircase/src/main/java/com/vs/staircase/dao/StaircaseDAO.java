@@ -28,7 +28,7 @@ public class StaircaseDAO  {
 		long time = date.getTime();
        
 	    Timestamp ts = new Timestamp(time);
-	    System.out.println("hello");
+	    
 	    objStaircaseVO.setRequestTime(ts);
 		}
 		catch(Exception e)
